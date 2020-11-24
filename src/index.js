@@ -13,6 +13,9 @@ import {database} from "./keys.js";
 import index from "./routes/index.js";
 import authentication from "./routes/authenthication.js";
 import rutas from "./routes/rutas.js";
+import empleados from "./routes/empleados.js";
+import pasajeros from "./routes/pasajeros.js";
+import boletos from "./routes/boletos.js";
 //modules workaround
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -70,6 +73,9 @@ app.use((req, res, next) => {
 app.use(index);
 app.use(authentication);
 app.use('/rutas', rutas);
+app.use('/empleados', empleados);
+app.use('/boletos', boletos);
+app.use('/pasajeros', pasajeros);
 
 // Public
 app.use(Express.static(path.join( __dirname, 'public')));
