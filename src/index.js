@@ -3,7 +3,7 @@ import Express from "express";
 import path from "path";
 import exphbs from "express-handlebars";
 import session from "express-session";
-import validator from "express-validator";
+// import {} from  "express-validator";
 import passport from "passport";
 import flash from "connect-flash";
 import expressMySQLSession from "express-mysql-session";
@@ -12,7 +12,7 @@ import {database} from "./keys.js";
 // routes
 import index from "./routes/index.js";
 import authentication from "./routes/authenthication.js";
-import links from "./routes/links.js";
+import rutas from "./routes/rutas.js";
 //modules workaround
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -69,7 +69,7 @@ app.use((req, res, next) => {
 // Routes
 app.use(index);
 app.use(authentication);
-app.use('/links', links);
+app.use('/rutas', rutas);
 
 // Public
 app.use(Express.static(path.join( __dirname, 'public')));

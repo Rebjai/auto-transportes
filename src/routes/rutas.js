@@ -3,9 +3,11 @@ const router = Router();
 import pool from "../database.js";
 import {isLoggedIn} from "../lib/auth.js";
 
+const table = 'ruta'
 
-router.get('/add', (req, res) => {
-    res.render('links/add');
+router.get('/add',async (req, res) => {
+    const estaciones = await pool.query('SELECT * FROM estaciones');
+    res.render('rutas/add', {estaciones});
 });
 
 router.post('/add', async (req, res) => {
@@ -16,28 +18,28 @@ router.post('/add', async (req, res) => {
         description,
         user_id: req.user.id
     };
-    await pool.query('INSERT INTO links set ?', [newLink]);
+    await pool.query('INSERT INTO ' + table + ' set ?', [newLink]);
     req.flash('success', 'Link Saved Successfully');
-    res.redirect('/links');
+    res.redirect('/rutas');
 });
 
 router.get('/', isLoggedIn, async (req, res) => {
-    const links = await pool.query('SELECT * FROM links WHERE user_id = ?', [req.user.id]);
-    res.render('links/list', { links });
+    const links = await pool.query('SELECT * FROM ' + table);
+    res.render('rutas/list', { links });
 });
 
 router.get('/delete/:id', async (req, res) => {
     const { id } = req.params;
-    await pool.query('DELETE FROM links WHERE ID = ?', [id]);
+    await pool.query('DELETE FROM ' + table + ' WHERE ID = ?', [id]);
     req.flash('success', 'Link Removed Successfully');
-    res.redirect('/links');
+    res.redirect('/rutas');
 });
 
 router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
-    const links = await pool.query('SELECT * FROM links WHERE id = ?', [id]);
+    const links = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
     console.log(links);
-    res.render('links/edit', {link: links[0]});
+    res.render('rutas/edit', {link: links[0]});
 });
 
 router.post('/edit/:id', async (req, res) => {
@@ -48,9 +50,9 @@ router.post('/edit/:id', async (req, res) => {
         description,
         url
     };
-    await pool.query('UPDATE links set ? WHERE id = ?', [newLink, id]);
+    await pool.query('UPDATE ' + table + ' set ? WHERE id = ?', [newLink, id]);
     req.flash('success', 'Link Updated Successfully');
-    res.redirect('/links');
+    res.redirect('/rutas');
 });
 
 export default router;

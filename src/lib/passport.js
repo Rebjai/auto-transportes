@@ -4,18 +4,21 @@ import pool from "../database.js";
 import helpers from "./helpers.js";
 
 const LocalStrategy = passportLocal.Strategy;
-
-passport.use('local.signin', new LocalStrategy({
+const userTable = 'Usuarios'
+const usernameField = 'empleado_id'
+const options = {
   usernameField: 'username',
   passwordField: 'password',
   passReqToCallback: true
-}, async (req, username, password, done) => {
-  const rows = await pool.query('SELECT * FROM users WHERE username = ?', [username]);
+}
+
+passport.use('local.signin', new LocalStrategy(options, async (req, username, password, done) => {
+  const rows = await pool.query('SELECT * FROM ' + userTable + ' WHERE ' + usernameField + ' = ?', [username]);
   if (rows.length > 0) {
     const user = rows[0];
-    const validPassword = await helpers.matchPassword(password, user.password)
+    const validPassword = await helpers.matchPassword(password, user.clave)
     if (validPassword) {
-      done(null, user, req.flash('success', 'Welcome ' + user.username));
+      done(null, user, req.flash('success', 'Welcome ' + user.empleado_id));
     } else {
       done(null, false, req.flash('message', 'Incorrect Password'));
     }
@@ -24,22 +27,20 @@ passport.use('local.signin', new LocalStrategy({
   }
 }));
 
-passport.use('local.signup', new LocalStrategy({
-  usernameField: 'username',
-  passwordField: 'password',
-  passReqToCallback: true
-}, async (req, username, password, done) => {
+passport.use('local.signup', new LocalStrategy(options, async (req, username, password, done) => {
 
   const { fullname } = req.body;
   let newUser = {
-    fullname,
-    username,
-    password
+    // fullname,
+    empleado_id: username,
+    clave: password
   };
-  newUser.password = await helpers.encryptPassword(password);
+  newUser.clave= await helpers.encryptPassword(password);
   // Saving in the Database
-  const result = await pool.query('INSERT INTO users SET ? ', newUser);
+  let query = 'INSERT INTO ' + userTable + ' SET ? '
+  const result = await pool.query(query, newUser);
   newUser.id = result.insertId;
+  console.log(newUser);
   return done(null, newUser);
 }));
 
@@ -48,6 +49,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const rows = await pool.query('SELECT * FROM users WHERE id = ?', [id]);
+  const rows = await pool.query('SELECT * FROM ' + userTable + ' WHERE id = ?', [id]);
   done(null, rows[0]);
 });

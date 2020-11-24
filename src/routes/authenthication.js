@@ -2,10 +2,12 @@
 import express from "express";
 import passport from "passport";
 import {isLoggedIn} from "../lib/auth.js";
+import { check, validationResult } from "express-validator";
 
 const router = express.Router();
 
 // const { isLoggedIn } = require('../lib/auth');
+const loginValidation = [check('username', 'Username is Required').notEmpty(),check('password', 'Password is Required').notEmpty()]
 
 // SIGNUP
 router.get('/signup', (req, res) => {
@@ -23,13 +25,13 @@ router.get('/signin', (req, res) => {
   res.render('auth/signin');
 });
 
-router.post('/signin', (req, res, next) => {
-  req.check('username', 'Username is Required').notEmpty();
-  req.check('password', 'Password is Required').notEmpty();
-  const errors = req.validationErrors();
+router.post('/signin',loginValidation, (req, res, next) => {
+  let valid = validationResult(req)
+  const errors = valid.errors;
   if (errors.length > 0) {
     req.flash('message', errors[0].msg);
     res.redirect('/signin');
+    return 
   }
   passport.authenticate('local.signin', {
     successRedirect: '/profile',
