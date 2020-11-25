@@ -25,20 +25,20 @@ router.post('/add', async (req, res) => {
         // user_id: req.user.id
     };
     await pool.query('INSERT INTO ' + table + ' set ?', [newLink]);
+    console.log(newLink);
     req.flash('success', 'Link Saved Successfully');
     res.redirect('/' + viewBaseRoute);
 });
 
 router.get('/', isLoggedIn, async (req, res) => {
     const employes = await pool.query('SELECT empleado.*, tipo_empleado.nombre as tipo_empleado, area.nombre as area FROM ' + table + ' INNER JOIN tipo_empleado ON ' + table + '.tipo_empleado=tipo_empleado.id INNER JOIN area ON ' + table + '.area=area.id');
-    console.log(employes);
     res.render(viewBaseRoute + '/list', { employes });
 });
 
 router.get('/delete/:id', async (req, res) => {
     const { id } = req.params;
     await pool.query('DELETE FROM ' + table + ' WHERE ID = ?', [id]);
-    req.flash('success', 'Link Removed Successfully');
+    req.flash('success', 'Employee Removed Successfully');
     res.redirect('/' + viewBaseRoute);
 });
 
