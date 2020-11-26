@@ -4,56 +4,27 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="/rutas/add" method="POST">
+                    <form action="/pasajeros/add" method="POST">
                         <div class="form-group">
-                            <input type="text" name="title" class="form-control" placeholder="Title" autofocus>
+                            <label for="nombre">Nombre</label>
+                            <input name="nombre"  type="text" class="form-control" id="nombre">
                         </div>
                         <div class="form-group">
-                            <input type="url" name="url" class="form-control" placeholder="URL">
+                            <label for="apellidos">Apellidos</label>
+                            <input name="apellido" type="text" class="form-control" id="apellidos">
                         </div>
                         <div class="form-group">
-                            <textarea name="description" rows="2" class="form-control"
-                                placeholder="Description"></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="origen">Origen</label>
-                            <select name="origen" class="form-control">
-                                {{#each estaciones}}
-
-                                <option value="{{id}}">{{estado}}</option>
-                                {{else}}
-                                <div class="col-md-4 mx-auto">
-                                    <div class="card card-body text-center">
-                                        <p>There are not Links saved yet.</p>
-                                        <a href="/rutas/add">Create One!</a>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </select>
+                            <label for="exampleInputEmail1">Correo</label>
+                            <input name="correo" type="email" class="form-control" id="exampleInputEmail1">
                         </div>
                         <div class="form-group">
-                            <label for="destino">Destino</label>
-                            <select name="destino" class="form-control">
-                                {{#each estaciones}}
-
-                                <option value="{{id}}">{{estado}}</option>
-                                {{else}}
-                                <div class="col-md-4 mx-auto">
-                                    <div class="card card-body text-center">
-                                        <p>There are not Links saved yet.</p>
-                                        <a href="/rutas/add">Create One!</a>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </select>
+                            <label for="exampleInputPassword1">Clave</label>
+                            <input name="clave" type="password" class="form-control" id="exampleInputPassword1">
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-success btn-block">
-                                Save
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+
+
                 </div>
             </div>
         </div>

@@ -44,20 +44,27 @@ router.get('/delete/:id', async (req, res) => {
 
 router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
-    const links = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
-    console.log(links);
-    res.render(viewBaseRoute + '/edit', { link: links[0] });
+    const empleados = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
+    const empleado = empleados[0]
+    const area = await pool.query('SELECT * FROM area');
+    const tipo_empleado = await pool.query('SELECT * FROM tipo_empleado');
+    console.log(empleado);
+    res.render(viewBaseRoute + '/edit', { empleado, area , tipo_empleado});
 });
 
 router.post('/edit/:id', async (req, res) => {
-    const { id } = req.params;
-    const { title, description, url } = req.body;
+    const { id, area, tipo_empleado, nombre, apellidos, fecha_nacimiento, activo } = req.body;
     const newLink = {
-        title,
-        description,
-        url
+        id,
+        area,
+        tipo_empleado,
+        nombre,
+        apellidos,
+        fecha_nacimiento,
+        activo
+        // user_id: req.user.id
     };
-    await pool.query('UPDATE ' + table + ' set ? WHERE id = ?', [newLink, id]);
+    await pool.query('UPDATE ' + table + ' set ?', [newLink]);
     req.flash('success', 'Link Updated Successfully');
     res.redirect('/' + viewBaseRoute);
 });
