@@ -44,11 +44,12 @@ router.get('/delete/:id', async (req, res) => {
 
 router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
-    const empleados = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
-    const empleado = empleados[0]
     const area = await pool.query('SELECT * FROM area');
     const tipo_empleado = await pool.query('SELECT * FROM tipo_empleado');
-    console.log(empleado);
+    const empleados = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
+    let empleado = empleados[0]
+    let fecha = new Date(empleado.fecha_nacimiento)
+    empleado.fecha_nacimiento = `${fecha.getFullYear()}-${parseMonth(fecha.getMonth())}-${fecha.getDate()}`
     res.render(viewBaseRoute + '/edit', { empleado, area , tipo_empleado});
 });
 
@@ -64,9 +65,17 @@ router.post('/edit/:id', async (req, res) => {
         activo
         // user_id: req.user.id
     };
-    await pool.query('UPDATE ' + table + ' set ?', [newLink]);
+    await pool.query('UPDATE ' + table + ' set ? WHERE id=?', [newLink, id]);
     req.flash('success', 'Link Updated Successfully');
     res.redirect('/' + viewBaseRoute);
 });
+const parseMonth = (month) => {
+    let mes = month+1
+    console.log(mes);
+    if (mes<10) {
+        mes = '0' + mes
+    }
+    return mes
+}
 
 export default router;
