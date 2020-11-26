@@ -11,14 +11,17 @@ router.get('/add',async (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-    const { title, url, description } = req.body;
-    const newLink = {
-        title,
-        url,
-        description,
-        user_id: req.user.id
+    const { vehiculo, destino, origen, activo, capacidad, hora, precio } = req.body;
+    const nuevaRuta = {
+        vehiculo, 
+        destino, 
+        origen, 
+        activo, 
+        capacidad, 
+        hora, 
+        precio
     };
-    await pool.query('INSERT INTO ' + table + ' set ?', [newLink]);
+    await pool.query('INSERT INTO ' + table + ' set ?', [nuevaRuta]);
     req.flash('success', 'Link Saved Successfully');
     res.redirect('/rutas');
 });
