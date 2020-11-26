@@ -4,18 +4,31 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="/rutas/add" method="POST">
+                    <form action="/boletos/add" method="POST">
                         <div class="form-group">
-                            <input type="text" name="title" class="form-control" placeholder="Title" autofocus>
+                            <label for="vehiculo">Vehiculo</label>
+                            <input name="vehiculo"  type="text" class="form-control" id="vehiculo">
                         </div>
                         <div class="form-group">
-                            <input type="url" name="url" class="form-control" placeholder="URL">
+                            <label for="taquilla">Taquilla</label>
+                            <input name="taquilla"  type="text" class="form-control" id="taquilla">
                         </div>
                         <div class="form-group">
-                            <textarea name="description" rows="2" class="form-control"
-                                placeholder="Description"></textarea>
+                            <label for="ruta">Ruta</label>
+                            <input name="ruta"  type="text" class="form-control" id="ruta">
                         </div>
-                        
+                        <div class="form-group">
+                            <label for="pasajero">Pasajero</label>
+                            <input name="pasajero"  type="text" class="form-control" id="pasajero">
+                        </div>
+                        <div class="form-group">
+                            <label for="hora">Hora</label>
+                            <input name="hora"  type="text" class="form-control" id="hora">
+                        </div>
+                        <div class="form-group">
+                            <label for="asiento">Asiento</label>
+                            <input name="asiento"  type="text" class="form-control" id="asiento">
+                        </div>
                         <div class="form-group">
                             <label for="origen">Origen</label>
                             <select name="origen" class="form-control">
@@ -50,7 +63,7 @@
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success btn-block">
-                                Save
+                                Guardar
                             </button>
                         </div>
                     </form>
