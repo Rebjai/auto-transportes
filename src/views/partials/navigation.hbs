@@ -18,7 +18,29 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="/rutas">Rutas</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/rutas/add">Vender boleto</a>
+            <a class="dropdown-item" href="/rutas/add">Nueva ruta</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Pasajeros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/pasajeros">Pasajeros</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/pasajeros/add">Nuevo Pasajero</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Boleros
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/boletos">Boletos</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/boletos/add">Vender boleto</a>
           </div>
         </li>
         {{#if user.isAdmin }}
