@@ -3,6 +3,7 @@ import express from "express";
 import passport from "passport";
 import {isLoggedIn} from "../lib/auth.js";
 import { check, validationResult } from "express-validator";
+import pool from "../database.js";
 
 const router = express.Router();
 
@@ -10,8 +11,9 @@ const router = express.Router();
 const loginValidation = [check('username', 'Username is Required').notEmpty(),check('password', 'Password is Required').notEmpty()]
 
 // SIGNUP
-router.get('/signup', (req, res) => {
-  res.render('auth/signup');
+router.get('/signup', async (req, res) => {
+  const empleado = await pool.query('SELECT * FROM empleado');
+  res.render('auth/signup',{empleado});
 });
 
 router.post('/signup', passport.authenticate('local.signup', {

@@ -16,6 +16,7 @@ import rutas from "./routes/rutas.js";
 import empleados from "./routes/empleados.js";
 import pasajeros from "./routes/pasajeros.js";
 import boletos from "./routes/boletos.js";
+import usuarios from "./routes/usuarios.js";
 //modules workaround
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -76,6 +77,7 @@ app.use('/rutas', rutas);
 app.use('/empleados', empleados);
 app.use('/boletos', boletos);
 app.use('/pasajeros', pasajeros);
+app.use('/usuarios', usuarios);
 
 // Public
 app.use(Express.static(path.join( __dirname, 'public')));

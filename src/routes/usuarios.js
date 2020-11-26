@@ -3,8 +3,8 @@ const router = Router();
 import pool from "../database.js";
 import { isLoggedIn } from "../lib/auth.js";
 
-const table = 'empleado'
-const viewBaseRoute = 'empleados'
+const table = 'Usuarios'
+const viewBaseRoute = 'usuarios'
 
 router.get('/add', async (req, res) => {
     const area = await pool.query('SELECT * FROM area');
@@ -31,8 +31,8 @@ router.post('/add', async (req, res) => {
 });
 
 router.get('/', isLoggedIn, async (req, res) => {
-    const employes = await pool.query('SELECT empleado.*, tipo_empleado.nombre as tipo_empleado, area.nombre as area FROM ' + table + ' INNER JOIN tipo_empleado ON ' + table + '.tipo_empleado=tipo_empleado.id INNER JOIN area ON ' + table + '.area=area.id');
-    res.render(viewBaseRoute + '/list', { employes });
+    const usuario = await pool.query('SELECT * FROM ' + table);
+    res.render(viewBaseRoute + '/list', { usuario });
 });
 
 router.get('/delete/:id', async (req, res) => {

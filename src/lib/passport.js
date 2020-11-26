@@ -49,9 +49,8 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const rows = await pool.query('SELECT '+userTable+'.*, empleado.tipo_empleado FROM ' + userTable + ' INNER JOIN empleado WHERE Usuarios.id = ?', [id]);
+  const rows = await pool.query('SELECT '+userTable+'.*, empleado.tipo_empleado FROM ' + userTable + ' INNER JOIN empleado WHERE Usuarios.empleado_id = empleado.id AND Usuarios.id = ?', [id]);
   let user = rows[0]
   user.isAdmin = user.tipo_empleado == 1
-  
   done(null, user);
 });
