@@ -14,7 +14,7 @@ router.get('/add', async (req, res) => {
 
 router.post('/add', async (req, res) => {
     const { id, area, tipo_empleado, nombre, apellidos, fecha_nacimiento, activo } = req.body;
-    const newLink = {
+    const nuevoUsuario = {
         id,
         area,
         tipo_empleado,
@@ -24,7 +24,7 @@ router.post('/add', async (req, res) => {
         activo
         // user_id: req.user.id
     };
-    await pool.query('INSERT INTO ' + table + ' set ?', [newLink]);
+    await pool.query('INSERT INTO ' + table + ' set ?', [nuevoUsuario]);
     console.log(newLink);
     req.flash('success', 'Link Saved Successfully');
     res.redirect('/' + viewBaseRoute);
@@ -46,7 +46,7 @@ router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
     const links = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
     console.log(links);
-    res.render(viewBaseRoute + '/edit', { link: links[0] });
+    res.render(viewBaseRoute + '/edit', { usuarios: links[0] });
 });
 
 router.post('/edit/:id', async (req, res) => {

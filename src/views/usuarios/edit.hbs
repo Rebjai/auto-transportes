@@ -4,14 +4,14 @@
         <div class="card-body">
             <form action="/usuarios/edit/{{usuarios.id}}" method="POST">
                         <div class="form-group">
-                        <input type="number" name="empleado_id" class="form-control" placeholder="ID de empleado" value="{{usuario.empleado_id}}">
+                        <input type="number" name="empleado_id" class="form-control" placeholder="ID de empleado" value="{{usuarios.empleado_id}}">
                         </div>
                         <div class="form-group">
-                         <input type="number" name="clave" class="form-control" placeholder="Password" value="{{usuario.clave}}">
+                         <input type="text" name="clave" class="form-control" placeholder="Clave" value="{{usuarios.clave}}">
                         </div>
                 <div class="form-group">
                     <button class="btn btn-success btn-block">
-                        Save
+                        Guardar
                     </button>
                 </div>
             </form>
