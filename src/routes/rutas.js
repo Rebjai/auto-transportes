@@ -2,6 +2,7 @@ import { Router } from "express";
 const router = Router();
 import pool from "../database.js";
 import { isLoggedIn } from "../lib/auth.js";
+import { parseMonth } from "../lib/aux.js";
 
 const table = 'ruta'
 
@@ -14,7 +15,6 @@ router.get('/add', async (req, res) => {
 router.post('/add', async (req, res) => {
     const { vehiculo, destino, origen, activo, capacidad, hora, precio, dia } = req.body;
     let fechasql = dia + ' ' + hora
-    console.log(fechasql);
     const nuevaRuta = {
         vehiculo,
         destino,
@@ -48,20 +48,33 @@ router.get('/delete/:id', async (req, res) => {
 
 router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
+    const estaciones = await pool.query('SELECT * FROM estaciones');
+    const vehiculo = await pool.query('SELECT * FROM vehiculo');
     const links = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
-    console.log(links);
-    res.render('rutas/edit', { link: links[0] });
+    let ruta = links[0]
+    const hora = new Date (ruta.hora)
+    let dia = hora.getFullYear() + '-' + parseMonth(hora.getMonth()) + '-' + hora.getDate()
+    ruta.dia = dia
+    ruta.hora = hora.getHours() + ':'+ hora.getMinutes()
+    console.log(ruta);
+
+    res.render('rutas/edit', { ruta, estaciones, vehiculo });
 });
 
 router.post('/edit/:id', async (req, res) => {
     const { id } = req.params;
-    const { title, description, url } = req.body;
-    const newLink = {
-        title,
-        description,
-        url
+    const { vehiculo, destino, origen, activo, capacidad, hora, precio, dia } = req.body;
+    let fechasql = dia + ' ' + hora
+    const nuevaRuta = {
+        vehiculo,
+        destino,
+        origen,
+        activo,
+        capacidad,
+        hora: fechasql,
+        precio
     };
-    await pool.query('UPDATE ' + table + ' set ? WHERE id = ?', [newLink, id]);
+    await pool.query('UPDATE ' + table + ' set ? WHERE id = ?', [nuevaRuta, id]);
     req.flash('success', 'Link Updated Successfully');
     res.redirect('/rutas');
 });

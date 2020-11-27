@@ -1,23 +1,67 @@
-<div class="col-md-4 mx-auto">
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
 
-    <div class="card">
-        <div class="card-body">
-            <form action="/rutas/edit/{{link.id}}" method="POST">
-                <div class="form-group">
-                    <input type="text" name="title" class="form-control" placeholder="Title" value="{{link.title}}" autofocus>
+            <div class="card">
+                <div class="card-body">
+                    <form action="/rutas/edit/{{ruta.id}}" method="POST">
+                        <div class="form-group">
+                            <label for="vehiculo">Vehiculo</label>
+                            <select name="vehiculo" class="form-control">
+                                {{#each vehiculo}}
+                                <option value="{{id}}">{{placas}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                         <div class="form-group">
+                            <label for="origen">Origen</label>
+                            <select name="origen" class="form-control" id="origen">
+                                {{#each estaciones}}
+
+                                <option value="{{id}}">{{estado}}</option>
+                                
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="destino">Destino</label>
+                            <select name="destino" class="form-control" id="destino">
+                                {{#each estaciones}}
+                                <option value="{{id}}">{{estado}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="capacidad">Capacidad</label>
+                            <input name="capacidad"  type="number" class="form-control" id="capacidad" value="{{ruta.capacidad}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="dia">Dia</label>
+                            <input name="dia"  type="date" class="form-control" id="dia" value="{{ruta.dia}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="hora">Hora</label>
+                            <input name="hora"  type="time" class="form-control" id="hora" value="{{ruta.hora}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="precio">Precio</label>
+                            <input name="precio"  type="number" step=".1" class="form-control" id="precio" value="{{ruta.precio}}">
+                        </div>
+                        <div class="form-check">
+                            <input name="activo" class="form-check-input" type="checkbox" value="1" id="activo" checked>
+                            <label class="form-check-label" for="activo">
+                                Activo
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Save
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <input type="url" name="url" class="form-control" placeholder="URL" value="{{link.url}}">
-                </div>
-                <div class="form-group">
-                    <textarea name="description" rows="2" class="form-control" placeholder="Description">{{link.description}}</textarea>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-success btn-block">
-                        Save
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
+
     </div>
 </div>
