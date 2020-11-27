@@ -44,13 +44,14 @@ router.get('/edit/:id', async (req, res) => {
 
 router.post('/edit/:id', async (req, res) => {
     const { id } = req.params;
-    const { title, description, url } = req.body;
-    const newLink = {
-        title,
-        description,
-        url
+    const { nombre, apellido, correo, clave } = req.body;
+    const nuevoPasajero = {
+        nombre,
+        apellido,
+        correo,
+        clave
     };
-    await pool.query('UPDATE ' + table + ' set ? WHERE id = ?', [newLink, id]);
+    await pool.query('UPDATE ' + table + ' set ? WHERE id = ?', [nuevoPasajero, id]);
     req.flash('success', 'Link Updated Successfully');
     res.redirect('/' + viewBaseRoute);
 });
