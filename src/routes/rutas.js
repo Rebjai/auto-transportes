@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 import pool from "../database.js";
 import { isLoggedIn } from "../lib/auth.js";
-import { parseMonth } from "../lib/aux.js";
+import { parseMonth, parse2digit } from "../lib/aux.js";
 
 const table = 'ruta'
 
@@ -55,7 +55,7 @@ router.get('/edit/:id', async (req, res) => {
     const hora = new Date (ruta.hora)
     let dia = hora.getFullYear() + '-' + parseMonth(hora.getMonth()) + '-' + hora.getDate()
     ruta.dia = dia
-    ruta.hora = hora.getHours() + ':'+ hora.getMinutes()
+    ruta.hora = parse2digit(hora.getHours()) + ':'+ hora.getMinutes()+':'+ parse2digit(hora.getSeconds())
     console.log(ruta);
 
     res.render('rutas/edit', { ruta, estaciones, vehiculo });
