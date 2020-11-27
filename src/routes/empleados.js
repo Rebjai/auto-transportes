@@ -2,7 +2,7 @@ import { Router } from "express";
 const router = Router();
 import pool from "../database.js";
 import { isLoggedIn } from "../lib/auth.js";
-import { parseMonth } from "../lib/aux.js";
+import { parseMonth } from "../lib/auxiliaryFunctions.js";
 
 const table = 'empleado'
 const viewBaseRoute = 'empleados'
