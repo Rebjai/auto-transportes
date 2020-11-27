@@ -7,7 +7,8 @@ const table = 'ruta'
 
 router.get('/add',async (req, res) => {
     const estaciones = await pool.query('SELECT * FROM estaciones');
-    res.render('rutas/add', {estaciones});
+    const vehiculo = await pool.query('SELECT * FROM vehiculo');
+    res.render('rutas/add', {estaciones, vehiculo});
 });
 
 router.post('/add', async (req, res) => {

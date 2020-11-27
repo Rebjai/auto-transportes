@@ -7,23 +7,33 @@
                     <form action="/rutas/add" method="POST">
                         <div class="form-group">
                             <label for="vehiculo">Vehiculo</label>
-                            <input name="vehiculo"  type="text" class="form-control" id="vehiculo">
+                            <select name="vehiculo" class="form-control">
+                                {{#each vehiculo}}
+                                <option value="{{id}}">{{placas}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                         <div class="form-group">
+                            <label for="origen">Origen</label>
+                            <select name="origen" class="form-control" id="origen">
+                                {{#each estaciones}}
+
+                                <option value="{{id}}">{{estado}}</option>
+                                
+                                {{/each}}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="destino">Destino</label>
-                            <input name="destino"  type="text" class="form-control" id="destino">
-                        </div>
-                        <div class="form-group">
-                            <label for="origen">Origen</label>
-                            <input name="origen"  type="text" class="form-control" id="origen">
-                        </div>
-                        <div class="form-group">
-                            <label for="activo">Activo</label>
-                            <input name="activo"  type="text" class="form-control" id="activo">
+                            <select name="destino" class="form-control" id="destino">
+                                {{#each estaciones}}
+                                <option value="{{id}}">{{estado}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="capacidad">Capacidad</label>
-                            <input name="capacidad"  type="text" class="form-control" id="capacidad">
+                            <input name="capacidad"  type="number" class="form-control" id="capacidad">
                         </div>
                         <div class="form-group">
                             <label for="hora">Hora</label>
@@ -31,40 +41,13 @@
                         </div>
                         <div class="form-group">
                             <label for="precio">Precio</label>
-                            <input name="precio"  type="text" class="form-control" id="precio">
+                            <input name="precio"  type="number" step=".1" class="form-control" id="precio">
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="origen">Origen</label>
-                            <select name="origen" class="form-control">
-                                {{#each estaciones}}
-
-                                <option value="{{id}}">{{estado}}</option>
-                                {{else}}
-                                <div class="col-md-4 mx-auto">
-                                    <div class="card card-body text-center">
-                                        <p>There are not Links saved yet.</p>
-                                        <a href="/rutas/add">Create One!</a>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="destino">Destino</label>
-                            <select name="destino" class="form-control">
-                                {{#each estaciones}}
-
-                                <option value="{{id}}">{{estado}}</option>
-                                {{else}}
-                                <div class="col-md-4 mx-auto">
-                                    <div class="card card-body text-center">
-                                        <p>There are not Links saved yet.</p>
-                                        <a href="/rutas/add">Create One!</a>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </select>
+                        <div class="form-check">
+                            <input name="activo" class="form-check-input" type="checkbox" value="1" id="activo" checked>
+                            <label class="form-check-label" for="activo">
+                                Activo
+                            </label>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success btn-block">
