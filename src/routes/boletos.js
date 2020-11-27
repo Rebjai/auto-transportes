@@ -8,12 +8,21 @@ const viewBaseRoute = 'boletos'
 
 router.get('/add',async (req, res) => {
     const estaciones = await pool.query('SELECT * FROM estaciones');
-    const ruta = await pool.query('SELECT * FROM ruta');
-    res.render(viewBaseRoute+'/add', {estaciones, ruta});
+    const pasajero = await pool.query('SELECT * FROM pasajero');
+    const vehiculo = await pool.query('SELECT * FROM vehiculo');
+    const taquilla = await pool.query('SELECT * FROM taquilla');
+    const ruta = await pool.query(`SELECT t.*, 
+    t1.estado as origen, t2.estado as destino
+    FROM ruta as t
+    JOIN estaciones t1 ON t1.id = t.origen
+    JOIN estaciones t2 ON t2.id = t.destino`);
+    res.render(viewBaseRoute+'/add', {estaciones, ruta, pasajero, vehiculo, taquilla});
 });
 
 router.post('/add', async (req, res) => {
-    const { vehiculo, taquilla, ruta, pasajero, hora, asiento} = req.body; 
+    const { vehiculo, taquilla, ruta, pasajero, asiento} = req.body;
+    let hora = new Date().toISOString().slice(0, 19).replace('T', ' ')
+
     const nuevoBoleto = {
         vehiculo, 
         taquilla, 
@@ -28,8 +37,14 @@ router.post('/add', async (req, res) => {
 });
 
 router.get('/', isLoggedIn, async (req, res) => {
-    const links = await pool.query('SELECT * FROM ' + table);
-    res.render(viewBaseRoute+'/list', { links });
+    // const boleto = await pool.query('SELECT * FROM ' + table);
+    const boleto = await pool.query(`SELECT t.*, 
+    t1.nombre as pasajero, t2.placas as vehiculo
+    FROM ${table} as t
+    JOIN pasajero t1 ON t1.id = t.pasajero
+    JOIN vehiculo t2 ON t2.id = t.vehiculo`);
+    
+    res.render(viewBaseRoute+'/list', { boleto });
 });
 
 router.get('/delete/:id', async (req, res) => {
@@ -42,8 +57,17 @@ router.get('/delete/:id', async (req, res) => {
 router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
     const links = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
+    const estaciones = await pool.query('SELECT * FROM estaciones');
+    const pasajero = await pool.query('SELECT * FROM pasajero');
+    const vehiculo = await pool.query('SELECT * FROM vehiculo');
+    const taquilla = await pool.query('SELECT * FROM taquilla');
+    const ruta = await pool.query(`SELECT t.*, 
+    t1.estado as origen, t2.estado as destino
+    FROM ruta as t
+    JOIN estaciones t1 ON t1.id = t.origen
+    JOIN estaciones t2 ON t2.id = t.destino`);
     console.log(links);
-    res.render(viewBaseRoute+'/edit', {link: links[0]});
+    res.render(viewBaseRoute+'/edit', {boleto: links[0],estaciones, ruta, pasajero, vehiculo, taquilla});
 });
 
 router.post('/edit/:id', async (req, res) => {

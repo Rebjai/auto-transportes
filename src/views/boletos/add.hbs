@@ -6,12 +6,20 @@
                 <div class="card-body">
                     <form action="/boletos/add" method="POST">
                         <div class="form-group">
-                            <label for="vehiculo">Vehiculo</label>
-                            <input name="vehiculo"  type="text" class="form-control" id="vehiculo">
+                            <label for="origen">Vehiculo</label>
+                            <select name="vehiculo" class="form-control" id="vehiculo">
+                                {{#each vehiculo}}
+                                <option value="{{id}}">{{placas}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="taquilla">Taquilla</label>
-                            <input name="taquilla"  type="text" class="form-control" id="taquilla">
+                            <select name="taquilla" class="form-control" id="taquilla">
+                                {{#each taquilla}}
+                                <option value="{{id}}">taquilla {{id}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="origen">ruta</label>
@@ -24,47 +32,15 @@
                         </div>
                         <div class="form-group">
                             <label for="pasajero">Pasajero</label>
-                            <input name="pasajero"  type="text" class="form-control" id="pasajero">
-                        </div>
-                        <div class="form-group">
-                            <label for="hora">Hora</label>
-                            <input name="hora"  type="text" class="form-control" id="hora">
+                            <select name="pasajero" class="form-control" id="pasajero">
+                                {{#each pasajero}}
+                                <option value="{{id}}">{{nombre}} {{apellido}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="asiento">Asiento</label>
                             <input name="asiento"  type="text" class="form-control" id="asiento">
-                        </div>
-                        <div class="form-group">
-                            <label for="origen">Origen</label>
-                            <select name="origen" class="form-control">
-                                {{#each estaciones}}
-
-                                <option value="{{id}}">{{estado}}</option>
-                                {{else}}
-                                <div class="col-md-4 mx-auto">
-                                    <div class="card card-body text-center">
-                                        <p>There are not Links saved yet.</p>
-                                        <a href="/rutas/add">Create One!</a>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="destino">Destino</label>
-                            <select name="destino" class="form-control">
-                                {{#each estaciones}}
-
-                                <option value="{{id}}">{{estado}}</option>
-                                {{else}}
-                                <div class="col-md-4 mx-auto">
-                                    <div class="card card-body text-center">
-                                        <p>There are not Links saved yet.</p>
-                                        <a href="/rutas/add">Create One!</a>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </select>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success btn-block">
