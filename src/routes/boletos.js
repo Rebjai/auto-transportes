@@ -8,7 +8,8 @@ const viewBaseRoute = 'boletos'
 
 router.get('/add',async (req, res) => {
     const estaciones = await pool.query('SELECT * FROM estaciones');
-    res.render(viewBaseRoute+'/add', {estaciones});
+    const ruta = await pool.query('SELECT * FROM ruta');
+    res.render(viewBaseRoute+'/add', {estaciones, ruta});
 });
 
 router.post('/add', async (req, res) => {

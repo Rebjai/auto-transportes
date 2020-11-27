@@ -14,8 +14,13 @@
                             <input name="taquilla"  type="text" class="form-control" id="taquilla">
                         </div>
                         <div class="form-group">
-                            <label for="ruta">Ruta</label>
-                            <input name="ruta"  type="text" class="form-control" id="ruta">
+                            <label for="origen">ruta</label>
+                            <select name="ruta" class="form-control">
+                                {{#each ruta}}
+
+                                <option value="{{id}}">de {{origen}} a {{destino}}</option>
+                                {{/each}}
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="pasajero">Pasajero</label>
