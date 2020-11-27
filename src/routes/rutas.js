@@ -12,14 +12,16 @@ router.get('/add',async (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-    const { vehiculo, destino, origen, activo, capacidad, hora, precio } = req.body;
+    const { vehiculo, destino, origen, activo, capacidad, hora, precio,dia } = req.body;
+    let fechasql = dia + ' ' + hora
+    console.log(fechasql);
     const nuevaRuta = {
         vehiculo, 
         destino, 
         origen, 
         activo, 
         capacidad, 
-        hora, 
+        hora: fechasql, 
         precio
     };
     await pool.query('INSERT INTO ' + table + ' set ?', [nuevaRuta]);
@@ -28,8 +30,8 @@ router.post('/add', async (req, res) => {
 });
 
 router.get('/', isLoggedIn, async (req, res) => {
-    const links = await pool.query('SELECT * FROM ' + table);
-    res.render('rutas/list', { links });
+    const ruta = await pool.query('SELECT * FROM ' + table );
+    res.render('rutas/list', { ruta });
 });
 
 router.get('/delete/:id', async (req, res) => {

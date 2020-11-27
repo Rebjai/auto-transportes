@@ -1,17 +1,17 @@
 <div class="container p-4">
     <div class="row">
-        {{#each links}}
+        {{#each ruta}}
         <div class="col-md-3">
             <div class="card text-center">
                 <div class="card-body">
-                    <a href="{{url}}" target="_blank">
+                    {{!-- <a href="{{url}}" target="_blank"> --}}
                         <h3 class="card-title text-uppercase">
-                            {{title}}
+                            {{origen}} - {{destino}}
                         </h3>
-                    </a>
-                    <p class="m-2">{{description}}</p>
+                    {{!-- </a> --}}
+                    <p class="m-2">{{hora}}</p>
                     <p class="text-muted">
-                        {{timeago created_at}}
+                        {{vehiculo}}
                     </p>
                     <a class="btn btn-danger" href="/rutas/delete/{{id}}">
                         Delete Link
