@@ -2,6 +2,7 @@ import { Router } from "express";
 const router = Router();
 import pool from "../database.js";
 import { isLoggedIn } from "../lib/auth.js";
+import { parseMonth } from "../lib/aux.js";
 
 const table = 'empleado'
 const viewBaseRoute = 'empleados'
@@ -25,7 +26,6 @@ router.post('/add', async (req, res) => {
         // user_id: req.user.id
     };
     await pool.query('INSERT INTO ' + table + ' set ?', [newLink]);
-    console.log(newLink);
     req.flash('success', 'Link Saved Successfully');
     res.redirect('/' + viewBaseRoute);
 });
@@ -69,13 +69,6 @@ router.post('/edit/:id', async (req, res) => {
     req.flash('success', 'Link Updated Successfully');
     res.redirect('/' + viewBaseRoute);
 });
-const parseMonth = (month) => {
-    let mes = month+1
-    console.log(mes);
-    if (mes<10) {
-        mes = '0' + mes
-    }
-    return mes
-}
+
 
 export default router;
