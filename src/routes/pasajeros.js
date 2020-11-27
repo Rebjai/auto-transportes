@@ -39,18 +39,28 @@ router.get('/delete/:id', async (req, res) => {
 router.get('/edit/:id', async (req, res) => {
     const { id } = req.params;
     const links = await pool.query('SELECT * FROM ' + table + ' WHERE id = ?', [id]);
+    let pasajero = links[0]
+    pasajero.clave = ''
     res.render(viewBaseRoute + '/edit', { pasajero: links[0] });
 });
 
 router.post('/edit/:id', async (req, res) => {
     const { id } = req.params;
     const { nombre, apellido, correo, clave } = req.body;
-    const nuevoPasajero = {
+    let nuevoPasajero = {
         nombre,
         apellido,
         correo,
         clave
     };
+    if (clave == '') {
+        nuevoPasajero = {
+            nombre,
+            apellido,
+            correo,
+        };
+    }
+
     await pool.query('UPDATE ' + table + ' set ? WHERE id = ?', [nuevoPasajero, id]);
     req.flash('success', 'Link Updated Successfully');
     res.redirect('/' + viewBaseRoute);
