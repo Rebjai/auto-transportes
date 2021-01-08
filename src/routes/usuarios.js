@@ -3,7 +3,7 @@ const router = Router();
 import pool from "../database.js";
 import { isLoggedIn } from "../lib/auth.js";
 
-const table = 'Usuarios'
+const table = 'usuarios'
 const viewBaseRoute = 'usuarios'
 
 router.get('/add', async (req, res) => {

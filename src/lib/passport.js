@@ -4,7 +4,7 @@ import pool from "../database.js";
 import helpers from "./helpers.js";
 
 const LocalStrategy = passportLocal.Strategy;
-const userTable = 'Usuarios'
+const userTable = 'usuarios'
 const usernameField = 'empleado_id'
 const options = {
   usernameField: 'username',
@@ -49,7 +49,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const rows = await pool.query('SELECT '+userTable+'.*, empleado.tipo_empleado FROM ' + userTable + ' INNER JOIN empleado WHERE Usuarios.empleado_id = empleado.id AND Usuarios.id = ?', [id]);
+  const rows = await pool.query('SELECT '+userTable+'.*, empleado.tipo_empleado FROM ' + userTable + ' INNER JOIN empleado WHERE '+ userTable+'.empleado_id = empleado.id AND '+ userTable+'.id = ?', [id]);
   let user = rows[0]
   user.isAdmin = user.tipo_empleado == 1
   done(null, user);
